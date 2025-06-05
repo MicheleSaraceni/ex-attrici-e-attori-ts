@@ -64,4 +64,26 @@ function isActress(dati: unknown): dati is Actress {
   )
 }
 
+async function getAllActresses(): Promise<Actress[]> {
+  try {
+    const res = await fetch(`${API_URL}/actresses/`);
+    if (!res.ok) {
+      throw new Error("Risposta chiamata non andata a buon fine")
+    }
+    const dati: unknown = await res.json();
+
+    if (!(dati instanceof Array)) {
+      throw new Error("Dati non validi")
+    }
+    const actresses: Actress[] = dati.filter(act => isActress(act))
+    return actresses;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error)
+    }
+    return [];
+  }
+}
+
+
 
