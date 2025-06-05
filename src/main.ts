@@ -31,6 +31,7 @@ async function getActress(id: number): Promise<Actress | null> {
     if (error instanceof Error) {
       console.error(error)
     }
+    return null
   }
 }
 
@@ -64,6 +65,8 @@ function isActress(dati: unknown): dati is Actress {
   )
 }
 
+
+
 async function getAllActresses(): Promise<Actress[]> {
   try {
     const res = await fetch(`${API_URL}/actresses/`);
@@ -87,3 +90,14 @@ async function getAllActresses(): Promise<Actress[]> {
 
 
 
+async function getActresses(idActress: Number[]): Promise<(Actress | null)[]> {
+  try {
+    const promises = idActress.map(id => getActress(id))
+    return await Promise.all(promises);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error)
+    }
+    return [];
+  }
+} 
