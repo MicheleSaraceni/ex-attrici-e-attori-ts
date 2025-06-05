@@ -90,7 +90,7 @@ async function getAllActresses(): Promise<Actress[]> {
 
 
 
-async function getActresses(idActress: Number[]): Promise<(Actress | null)[]> {
+async function getActresses(idActress: number[]): Promise<(Actress | null)[]> {
   try {
     const promises = idActress.map(id => getActress(id))
     return await Promise.all(promises);
